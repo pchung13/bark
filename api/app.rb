@@ -100,16 +100,24 @@ class AppApi < Grape::API
   
   ##
   # To register a new user
+  # If the user is already registered, it will update their RFID
   # Requires:
   # - rfid
   # - student_id
   #
   post '/register' do
     password = SecureRandom.hex(16)
-    account = Account.new(:rfid => params[:rfid], :student_id => params[:student_id],
-      :role => "user",
-      :password => password,
-      :password_confirmation => password)
+    account = Account.first(:student_id => params[:student_id])
+    
+    if account
+      account.rfid = params[:rfid]
+    else
+      account = Account.new(:rfid => params[:rfid], :student_id => params[:student_id],
+        :role => "user",
+        :password => password,
+        :password_confirmation => password)
+    end
+    
     if account.save
       {:status => "REGISTERED"}
     else

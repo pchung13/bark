@@ -101,6 +101,15 @@ describe "App Api Controller" do
       }.to change {Account.all.count}.by(1)
     end
     
+    it 'should update the rfid of the user if the user is already registered' do
+      expect {
+        post '/api/v1/register', {:rfid => "ABCD0000", :student_id => "3000000"}, "rack.session" => {:user_id => '2'}
+        last_response.status.should == 201
+        json = JSON.parse(last_response.body)
+        json['status'].should == "REGISTERED"
+      }.to_not change {Account.all.count}
+    end
+    
     it 'should provide reasons why a user can not be created' do
       expect {
         post '/api/v1/register', {:rfid => "ABCD1234", :student_id => '3900000'}, "rack.session" => {:user_id => '2'}
