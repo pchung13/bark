@@ -32,4 +32,6 @@ end
 
 # Mounts the core application for this project
 Padrino.mount("Bark").to('/')
+
 Padrino.mount("Admin").to("/admin")
+Padrino.mount("Merch").to("/merch")
