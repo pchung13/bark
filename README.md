@@ -19,7 +19,16 @@ Local Machine
 
 Heroku
 
-    heroku run bundle exec padrino rake dm:auto:migrate
+    heroku create maxs-bark --stack cedar
+    heroku addons:add shared-database
+    heroku addons:add memcache:5mb
+    heroku addons:add pgbackups:auto-month
+    heroku config:add RACK_ENV=production
+    
+    git push heroku master
+    
+    heroku run padrino rake dm:auto:upgrade
+    heroku run padrino rake seed
 
 ## Contributing
 
