@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1>CSESoc Events</h1>
+      <% @events.each do |event| %>
+        <div class="well">
+          <h2><%= event.name %></h2>
+          <p><%= event.description %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
