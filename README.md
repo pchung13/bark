@@ -14,8 +14,8 @@ Local Machine
 
     bundle install
     bundle exec padrino rake dm:auto:upgrade
-    # Then to test
-    bundle exec padrino rake
+    bundle exec padrino rake spec # Run the spec
+    bundle exec padrino server    # Run the web server
 
 Heroku
 
