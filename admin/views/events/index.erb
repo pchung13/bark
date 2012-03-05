@@ -1,0 +1,38 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li class="first active"><%= link_to pat(:list), url(:events, :index) %></li>
+      <li><%= link_to pat(:new), url(:events, :new) %></li>
+    </ul>
+  </div>
+  <div class="content">
+    <h2 class="title"><%= pat(:all) %> <% mt(:events) %></h2>
+    <div class="inner">
+      <table class="table">
+        <tr>
+          <th class="first"><%= mat(:event, :id) %></th>
+          <th><%= mat(:event, :name) %></th>
+          <th><%= mat(:event, :start_time) %></th>
+          <th><%= mat(:event, :end_time) %></th>
+          <th class="last">&nbsp;</th>
+        </tr>
+        <% @events.each do |event| %>
+        <tr>
+          <td class="first"><%= event.id %></td>
+          <td><%= event.name %></td>
+          <td><%= event.start_time %></td>
+          <td><%= event.end_time %></td>
+          <td class="last">
+            <%= button_to pat(:edit), url(:events, :edit, :id => event.id), :method => :get, :class => :button_to %> |
+            <%= button_to pat(:delete), url(:events, :destroy, :id => event.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')" %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+      <div class="actions-bar wat-cf">
+        <div class="actions"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar, partial("base/sidebar") %>

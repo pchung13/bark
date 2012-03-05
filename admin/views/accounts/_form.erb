@@ -1,0 +1,30 @@
+<div class="group">
+  <%= f.label :student_id %><%= f.error_message_on :student_id %>
+  <%= f.text_field :student_id, :class => :text_field %>
+  <span class="description">Ex: 3001234</span>
+</div>
+<div class="group">
+  <%= f.label :rfid %><%= f.error_message_on :rfid %>
+  <%= f.text_field :rfid, :class => :text_field %>
+  <span class="description">Ex: abcd1234</span>
+</div>
+<div class="group">
+  <%= f.label :password %><%= f.error_message_on :password %>
+  <%= f.password_field :password, :class => :password_field %>
+  <span class="description">Ex: a simple text</span>
+</div>
+<div class="group">
+  <%= f.label :password_confirmation %><%= f.error_message_on :password_confirmation %>
+  <%= f.password_field :password_confirmation, :class => :password_field %>
+  <span class="description">Ex: a simple text</span>
+</div>
+<div class="group">
+  <%= f.label :role %><%= f.error_message_on :role %>
+  <%= f.select :role, :options => access_control.roles %>
+  <span class="description">Ex: a simple text</span>
+</div>
+
+<div class="group navform wat-cf">
+  <%= f.submit pat(:save), :class => :button %>
+  <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:accounts, :index)}';return false", :class => :button %>
+</div>
