@@ -1,5 +1,7 @@
 # Bark
 
+[![Build Status](https://secure.travis-ci.org/maxpow4h/bark.png?branch=master)](http://travis-ci.org/maxpow4h/bark)
+
 Bark is an open source group management web app.
 Currently it is dependent on [CSEnatra](https://github.com/maxpow4h/csenatra)
 for looking up contact information.
