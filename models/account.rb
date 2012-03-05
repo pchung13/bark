@@ -56,7 +56,9 @@ class Account
   validates_length_of :student_id, :min => 7, :max => 7
   validates_format_of :student_id, :with => /^\d*$/
   
-  validates_uniqueness_of :rfid,    :if => lambda { |t| t.rfid.present? }
+  validates_length_of :rfid, :min => 8, :max => 8,    :if => lambda { |t| t.rfid.present? }
+  validates_format_of :rfid, :with => /^[0-9a-f]*$/i, :if => lambda { |t| t.rfid.present? }
+  validates_uniqueness_of :rfid,                      :if => lambda { |t| t.rfid.present? }
   
   validates_with_method :lowercase_cse_id # This must be before uniqueness
   validates_uniqueness_of :cse_id,  :if => lambda { |t| t.cse_id.present? }
