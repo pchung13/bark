@@ -135,7 +135,6 @@ class Account
       # User already registered with student number
       # Set their RFID
       account.rfid = user["rfid"]
-      account.save
     else
       # Account doesn't exist, create a new one
       account = Account.new(:student_id => user["student_id"], :rfid => user["rfid"])
@@ -143,12 +142,13 @@ class Account
       password = SecureRandom.hex(16)
       account.password = password
       account.password_confirmation = password
-      account.save
     end
+    raise "Unable To Save Account" unless account.save
+    
     # Create any checkins for this user
-    user["checkins"].each do |event|
-      raise "Event Not Found #{event.inspect}" unless Event.get(event)
-      Checkin.create!(:account => account, :event_id => event)
+    user["checkins"].each do |event_id|
+      raise "Event Not Found: #{event_id}" unless Event.get(event_id)
+      Checkin.create!(:account => account, :event_id => event_id)
     end
   end
   

@@ -197,6 +197,18 @@ describe "Account Model" do
       account.rfid.should == "1234512345"
       account.checkins.map {|x| x.id}.should == [1, 2]
     end
+    
+    it 'should be somewhat robust to invalid entry' do
+      user = {'rfid' => "1234512345", 'student_id' => '0', 'checkins' => [1, 2]}
+      expect {
+        Account.create_from_json(user)
+      }.to raise_error("Unable To Save Account")
+      
+      user = {'rfid' => "1234512345", 'student_id' => '3001234', 'checkins' => [3]}
+      expect {
+        Account.create_from_json(user)
+      }.to raise_error("Event Not Found: 3")
+    end
   end
   
 end
