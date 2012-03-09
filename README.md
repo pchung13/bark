@@ -4,7 +4,8 @@
 
 Bark is an open source group management web app.
 Currently it is dependent on [CSEnatra](https://github.com/maxpow4h/csenatra)
-for looking up contact information.
+for looking up contact information. Also a client is available for the API
+at [bark_client](https://github.com/maxpow4h/bark_client).
 
 Only an account with the role "admin" will be able to access the API.
 
