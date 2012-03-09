@@ -14,6 +14,7 @@
           <th><%= mat(:event, :name) %></th>
           <th><%= mat(:event, :start_time) %></th>
           <th><%= mat(:event, :end_time) %></th>
+          <th><%= mat(:event, :attendance) %></th>
           <th class="last">&nbsp;</th>
         </tr>
         <% @events.each do |event| %>
@@ -22,6 +23,7 @@
           <td><%= event.name %></td>
           <td><%= event.start_time %></td>
           <td><%= event.end_time %></td>
+          <td><%= event.checkins.count %></td>
           <td class="last">
             <%= button_to pat(:edit), url(:events, :edit, :id => event.id), :method => :get, :class => :button_to %> |
             <%= button_to pat(:delete), url(:events, :destroy, :id => event.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')" %>

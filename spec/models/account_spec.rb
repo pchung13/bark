@@ -145,4 +145,58 @@ describe "Account Model" do
     @account.attended_events.should == [event]
   end
   
+  describe 'create_from_json' do
+    ##
+    # The structure of the JSON file should be
+    #   [ { "rfid":"1234512345",
+    #       "student_id":"3001234",
+    #       "checkins":[1,2]
+    #     }, 
+    #     { "rfid":"12345aaaaa",
+    #       "student_id":"3004321",
+    #       "checkins":[1] }
+    #   ]
+    before do
+      FactoryGirl.create(:event)
+      FactoryGirl.create(:event)
+      @account.save
+    end
+    
+    it 'should create new accounts for unregistered users without rfid' do
+      user = {'student_id' => '3001234', 'checkins' => [1, 2]}
+      expect {
+        Account.create_from_json(user)
+      }.to change{Account.count}.by(1)
+      
+      new_account = Account.last
+      new_account.student_id.should == '3001234'
+      new_account.rfid.should == nil
+      new_account.checkins.map {|x| x.id}.should == [1, 2]
+    end
+    
+    it 'should create new accounts for unregistered users with rfid' do
+      user = {'rfid' => "1234512345", 'student_id' => '3001234', 'checkins' => [1, 2]}
+      expect {
+        Account.create_from_json(user)
+      }.to change{Account.count}.by(1)
+      
+      new_account = Account.last
+      new_account.student_id.should == '3001234'
+      new_account.rfid.should == '1234512345'
+      new_account.checkins.map {|x| x.id}.should == [1, 2]
+    end
+    
+    it 'should update the rfid of existing accounts' do
+      account = Account.first
+      user = {'rfid' => "1234512345", 'student_id' => account.student_id, 'checkins' => [1, 2]}
+      expect {
+        Account.create_from_json(user)
+      }.to_not change {Account.count}
+      
+      account = Account.first
+      account.rfid.should == "1234512345"
+      account.checkins.map {|x| x.id}.should == [1, 2]
+    end
+  end
+  
 end

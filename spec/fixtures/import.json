@@ -1,0 +1,6 @@
+[ { "rfid":"1234512345",
+"student_id":"3001234",
+"checkins":[1,2] },
+{ "rfid":"12345aaaaa",
+"student_id":"3004321",
+"checkins":[1] } ]

@@ -1,0 +1,22 @@
+<div class="block" id="block-text">
+  <div class="content">
+    <h2 class="title">Upload</h2>
+    <div class="inner">
+      <p class="first">
+        Import a .json file here.
+        <% form_for :event, url(:base, :import), :method => :post, :class => :form, :multipart => true do |f| %>
+          <div class="group">
+            <%= f.label :upload %><%= f.error_message_on :upload %>
+            <%= f.file_field :upload %>
+          </div>
+
+          <div class="group navform wat-cf">
+            <%= f.submit pat(:upload), :class => :button %>
+            <%= f.submit pat(:cancel), :onclick => "window.location='#{url(:base, :upload)}';return false", :class => :button %>
+          </div>
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar, partial("base/sidebar") %>

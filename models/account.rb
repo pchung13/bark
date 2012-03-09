@@ -121,9 +121,35 @@ class Account
     end.body
     data = JSON.parse data
     
-    self.cse_id = data["user"]
-    self.name  = data["name"]
-    self.program = data["program"]
+    self.cse_id   = data["user"]
+    self.name     = data["name"]
+    self.program  = data["program"]
+  end
+  
+  ##
+  # Creates a new account from a json hash
+  #
+  def self.create_from_json(user)
+    account = Account.first(:student_id => user["student_id"])
+    if account
+      # User already registered with student number
+      # Set their RFID
+      account.rfid = user["rfid"]
+      account.save
+    else
+      # Account doesn't exist, create a new one
+      account = Account.new(:student_id => user["student_id"], :rfid => user["rfid"])
+      account.role = 'user'
+      password = SecureRandom.hex(16)
+      account.password = password
+      account.password_confirmation = password
+      account.save
+    end
+    # Create any checkins for this user
+    user["checkins"].each do |event|
+      raise "Event Not Found #{event.inspect}" unless Event.get(event)
+      Checkin.create!(:account => account, :event_id => event)
+    end
   end
   
   private

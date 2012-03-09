@@ -24,4 +24,19 @@ describe "Admin Base Controller" do
     last_response.status.should == 200
   end
   
+  it 'should show the upload page' do
+    post '/admin/sessions/create', :student_id => @admin.student_id, :password => 'password'
+    get '/admin/base/upload'
+    last_response.status.should == 200
+  end
+  
+  it 'should import an upload' do
+    expect {
+      post '/admin/sessions/create', :student_id => @admin.student_id, :password => 'password'
+      file = Rack::Test::UploadedFile.new('./spec/fixtures/import.json', "application/text")
+      post "/admin/base/import", :event => {:upload => file }
+    }.to change {Account.all.count}.by(2)
+    last_response.status.should == 302
+  end
+  
 end
