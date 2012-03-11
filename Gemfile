@@ -19,6 +19,7 @@ end
 
 group :production do
   gem 'dm-postgres-adapter'
+  gem "rack-ssl-enforcer", :require => "rack/ssl-enforcer"
 end
 
 gem 'dm-validations'

@@ -7,6 +7,7 @@
 require File.expand_path("../config/boot.rb", __FILE__)
 
 use Rack::Session::Dalli, :namespace => 'rack:session'
+use Rack::SslEnforcer if RACK_ENV == 'production'
 
 map "/auth" do
   run AuthApi
