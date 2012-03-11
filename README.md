@@ -11,10 +11,15 @@ Only an account with the role "admin" will be able to access the API.
 
 ## Setup
 
+Dependencies:
+
+- memcached
+
 Local Machine
 
-    bundle install
+    bundle install --without production
     bundle exec padrino rake dm:auto:upgrade
+    RACK_ENV=test bundle exec padrino rake dm:auto:upgrade
     bundle exec padrino rake spec # Run the spec
     bundle exec padrino server    # Run the web server
 
