@@ -86,6 +86,34 @@ describe "Account Model" do
     @account.errors.on(:valid_role).should_not be_nil
   end
   
+  describe 'optional csenatra' do
+    
+    after do
+      ENV["CSENATRA_ON"] = "no"
+    end
+
+    it 'should lookup the user cse details if CSEnatra host is set' do
+
+      stub_request(:get, "http://csenatrausername:csenatrapassword@exmaple.com/~username/api/remote?user=3000000").
+         to_return(:status => 200, :body => {'user' => "username", 'name' => "Myname Surname", 'program' => "3000"}.to_json)
+      
+      account = FactoryGirl.build(:account)
+      account.save
+      account.cse_id.should   == nil
+      account.program.should  == nil
+      account.name.should     == nil
+      account.destroy
+    
+      ENV["CSENATRA_ON"] = "yes"
+      account2 = Account.new(account.attributes)
+      account2.save
+      account2.cse_id.should   == 'username'
+      account2.program.should  == '3000'
+      account2.name.should     == 'Myname Surname'
+    end
+    
+  end
+  
   it 'should lookup the cse details of a user' do
     stub_request(:get, "http://csenatrausername:csenatrapassword@exmaple.com/~username/api/remote?user=3000000").
        to_return(:status => 200, :body => {'user' => "username", 'name' => "Myname Surname", 'program' => "3000"}.to_json)

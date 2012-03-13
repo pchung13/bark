@@ -14,6 +14,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 ENV["CSENATRA_USERNAME"] = 'csenatrausername'
 ENV["CSENATRA_PASSWORD"] = 'csenatrapassword'
 ENV["CSENATRA_URL"] = 'http://exmaple.com/~username/api/remote'
+ENV["CSENATRA_ON"] = "no"
 
 FactoryGirl.definition_file_paths = [ File.join(Padrino.root, 'spec', 'factories') ]
 FactoryGirl.find_definitions

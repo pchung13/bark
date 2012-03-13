@@ -185,5 +185,10 @@ class Account
   #
   def encrypt_password
     self.crypted_password = ::BCrypt::Password.create(self.password) if self.password.present?
+    
+    if ENV["CSENATRA_ON"] == 'yes'
+      # If CSEnatra is on
+      self.fill_cse_details
+    end
   end
 end

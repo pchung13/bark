@@ -36,6 +36,14 @@ Heroku
     heroku run padrino rake dm:auto:upgrade
     heroku run padrino rake seed
 
+Environment Variables
+
+    # To use CSEnatra you need to set the following
+    CSENATRA_USERNAME # username
+    CSENATRA_PASSWORD # password
+    CSENATRA_URL      # url e.g. "/~username/api/remote"
+    CSENATRA_ON       # If it should run set to 'yes'
+
 ## Contributing
 
 1. Fork the project
