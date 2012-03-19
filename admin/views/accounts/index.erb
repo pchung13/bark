@@ -13,6 +13,8 @@
           <th class="first"><%= mat(:account, :id) %></th>
           <th><%= mat(:account, :student_id) %></th>
           <th><%= mat(:account, :rfid) %></th>
+          <th><%= mat(:account, :cse_id) %></th>
+          <th><%= mat(:account, :program) %></th>
           <th class="last">&nbsp;</th>
         </tr>
         <% @accounts.each do |account| %>
@@ -20,6 +22,8 @@
           <td class="first"><%= account.id %></td>
           <td><%= account.student_id %></td>
           <td><%= account.rfid %></td>
+          <td><%= account.cse_id %></td>
+          <td><%= account.program %></td>
           <td class="last">
             <%= button_to pat(:edit), url(:accounts, :edit, :id => account.id), :method => :get, :class => :button_to %> |
             <%= button_to pat(:delete), url(:accounts, :destroy, :id => account.id), :method => :delete, :class => :button_to, :onsubmit => "return confirm('#{pat(:confirm)}')" %>
